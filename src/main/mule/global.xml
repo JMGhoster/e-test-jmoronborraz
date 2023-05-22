@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="httpListenerConfig" doc:name="HTTP Listener config" doc:id="f9576c6e-542b-46ff-ae32-976dcbafdbc3" >
+		<http:listener-connection host="0.0.0.0" port="${experience.http.port}" readTimeout="10000"/>
+	</http:listener-config>
+	<global-property doc:name="Global Property" doc:id="0c00d593-7dd7-4146-bcc1-29e362c32e4d" name="env" value="local" />
+	<configuration-properties doc:name="Configuration properties" doc:id="05a692b6-7096-43d7-961d-fdf27beee379" file="properties/${env}-config.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="95eee56c-ce76-4bc5-a06c-f7993c1d236c" basePath="${process.basepath}" >
+		<http:request-connection host="${process.host}" port="${process.port}" />
+	</http:request-config>
+	<api-gateway:autodiscovery apiId="${autodiscovery.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="50f2bd79-7ed3-4e36-87f2-04e63338d736" flowRef="e-test-jmoronborraz-main" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="1076c737-4792-4ec6-95f4-6b03ed1d6751" file="properties/${env}-secure-config.yaml" key="${key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+</mule>

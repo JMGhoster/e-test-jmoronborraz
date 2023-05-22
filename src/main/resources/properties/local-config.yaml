@@ -1,0 +1,14 @@
+experience:
+  http:
+    port: "8085"
+  
+process:
+  host: "p-test-jmoronborraz-dev.us-e2.cloudhub.io"
+  port: "80"
+  basepath: "/api"
+  protocol: "HTTP"
+  path:
+    getAccounts: "/accounts"
+    
+autodiscovery:
+  id: "18679376"
